@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import axios from 'axios';
 
-const Login = ({ updateUser }) => {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   
@@ -13,8 +13,9 @@ const Login = ({ updateUser }) => {
         const user = res.data;
         if (user) {
           alert(`You are logged in as: ${user.username}`);
-          updateUser(user.username);
+          window.location = '/';
         }
+
         setUsername('');
         setPassword('');
       })
@@ -32,17 +33,20 @@ const Login = ({ updateUser }) => {
   };
 
   return (
-    <form>
-      <label htmlFor="username">
-        Username:
-        <input type="text" name="username" onChange={handleUsernameChange} value={username} />
-      </label>
-      <label htmlFor="password">
-        Password:
-        <input type="password" name="password" onChange={handlePasswordChange} value={password} />
-      </label>
-      <button type="button" onClick={handleSubmit}>Submit</button>
-    </form>
+    <div>
+      <h1>Login</h1>
+      <form>
+        <label htmlFor="username">
+          Username:
+          <input type="text" name="username" onChange={handleUsernameChange} value={username} />
+        </label>
+        <label htmlFor="password">
+          Password:
+          <input type="password" name="password" onChange={handlePasswordChange} value={password} />
+        </label>
+        <button type="button" onClick={handleSubmit}>Submit</button>
+      </form>
+    </div>
   );
 };
 

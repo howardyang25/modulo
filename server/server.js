@@ -31,10 +31,14 @@ app.get('/api/session', (req, res) => {
   res.send(req.user);
 });
 
+app.get('/api/logout', (req, res) => {
+  req.logout();
+  res.end();
+});
+
 app.get('*', (req, res) => {
   res.sendFile('index.html', { root: path.resolve(__dirname, '..', 'public') });
 });
-
 
 app.post('/register', [
   check('username').isLength({ min: 5 }).withMessage('Username must be at least 5 characters long'),

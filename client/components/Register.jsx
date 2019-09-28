@@ -10,6 +10,7 @@ const Register = () => {
     axios.post('/register', regInfo)
       .then((res) => {
         alert('Account created!');
+        window.location = '/login';
         setUsername('');
         setPassword('');
       })
@@ -32,17 +33,20 @@ const Register = () => {
   };
 
   return (
-    <form>
-      <label htmlFor="username">
-        Username:
-        <input type="text" name="username" onChange={handleUsernameChange} value={username} />
-      </label>
-      <label htmlFor="password">
-        Password:
-        <input type="password" name="password" onChange={handlePasswordChange} value={password} />
-      </label>
-      <button type="button" onClick={handleSubmit}>Submit</button>
-    </form>
+    <div>
+      <h1>Create an account</h1>
+      <form>
+        <label htmlFor="username">
+          Username:
+          <input type="text" name="username" onChange={handleUsernameChange} value={username} />
+        </label>
+        <label htmlFor="password">
+          Password:
+          <input type="password" name="password" onChange={handlePasswordChange} value={password} />
+        </label>
+        <button type="button" onClick={handleSubmit}>Submit</button>
+      </form>
+    </div>
   );
 };
 
