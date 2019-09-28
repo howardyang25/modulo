@@ -2,6 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const { check, validationResult } = require('express-validator');
+const { addUser } = require('../database/index.js');
+
+console.log(addUser);
 
 const app = express();
 const port = 3000;
@@ -22,10 +25,14 @@ app.post('/register', [
   check('username').isLength({ min: 5 }).withMessage('Username must be at least 5 characters long'),
   check('password').isLength({ min: 5 }).withMessage('Password must be at least 5 characters long'),
 ], (req, res) => {
+  console.log(req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).send(errors.errors);
   }
-
-  return res.status(201).send('Success');
+  
+  addUser(req.body)
+    .then(() => {
+      return res.status(201).send('Success');
+    });
 });
