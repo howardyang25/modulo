@@ -22,6 +22,18 @@ const addUser = ({ username, password }) => {
   });
 };
 
+const getUserByUsername = (username) => {
+  return User.findOne({ where: { username } });
+};
+
+const getUserById = (id) => {
+  return User.findOne({ where: { id } });
+};
+
+const comparePassword = (candidatePassword, hash) => {
+  return Promise.resolve((bcrypt.compareSync(candidatePassword, hash)));
+};
+
 sequelize
   .authenticate()
   .then(function(err) {
@@ -31,3 +43,6 @@ sequelize
   });
 
 module.exports.addUser = addUser;
+module.exports.getUserByUsername = getUserByUsername;
+module.exports.getUserById = getUserById;
+module.exports.comparePassword = comparePassword;
