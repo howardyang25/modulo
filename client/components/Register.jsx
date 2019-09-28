@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = () => {
-    const state = { username, password };
-    console.log(state);
+    const regInfo = { username, password };
+    axios.post('/register', regInfo)
+      .then((res) => {
+        alert('Account created!');
+        setUsername('');
+        setPassword('');
+      })
+      .catch((err) => {
+        const errorMessages = err.response.data;
+        let errors = [];
+        for (let i = 0; i < errorMessages.length; i++) {
+          errors.push(errorMessages[i].msg);
+        }
+        alert(errors.join('\n'));
+      });
   };
 
   const handleUsernameChange = (e) => {
@@ -25,7 +39,7 @@ const Register = () => {
       </label>
       <label htmlFor="password">
         Password:
-        <input type="text" name="password" onChange={handlePasswordChange} />
+        <input type="password" name="password" onChange={handlePasswordChange} value={password} />
       </label>
       <button type="button" onClick={handleSubmit}>Submit</button>
     </form>
