@@ -1,0 +1,16 @@
+CREATE DATABASE IF NOT EXISTS modulo;
+
+USE modulo;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(40) UNIQUE,
+    password VARCHAR(64),
+    salt VARCHAR(64)
+  );
+
+CREATE TABLE IF NOT EXISTS sessions (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    hash VARCHAR(64),
+    userId INT
+  );
