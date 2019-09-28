@@ -5,7 +5,8 @@ const { check, validationResult } = require('express-validator');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const { addUser, getUserByUsername, getUserById, comparePassword } = require('../database/index.js');
+const { addUser, getUserByUsername, getUserById, comparePassword } = require('../database/models/User.js');
+const { addGlobalTask, getGlobalTasks } = require('../database/models/GlobalTask.js');
 
 const app = express();
 const port = 3000;
@@ -36,8 +37,29 @@ app.get('/api/logout', (req, res) => {
   res.end();
 });
 
+app.get('/api/global-tasks', (req, res) => {
+  getGlobalTasks()
+    .then((tasks) => {
+      res.send(tasks);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+});
+
 app.get('*', (req, res) => {
   res.sendFile('index.html', { root: path.resolve(__dirname, '..', 'public') });
+});
+
+app.post('/api/global-tasks', (req, res) => {
+  req.body.userId = req.user.dataValues.id;
+  addGlobalTask(req.body)
+    .then(() => {
+      res.status(201).send('Success');
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
 });
 
 app.post('/register', [
