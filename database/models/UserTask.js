@@ -29,7 +29,7 @@ const addUserTask = (userId, globalTaskId, cb) => {
 };
 
 const getUserTasks = (userId, cb) => {
-  connection.query('SELECT u.id, u.checkedOff, u.createdAt, u.updatedAt, g.description, g.accepted, g.completed FROM globalTasks g INNER JOIN userTasks u WHERE u.globalTaskId = g.id and u.userID = ? ORDER BY u.createdAt DESC', [userId], (err, results) => {
+  connection.query('SELECT u.id, u.checkedOff, u.createdAt, u.updatedAt, u.globalTaskId, g.description, g.accepted, g.completed FROM globalTasks g INNER JOIN userTasks u WHERE u.globalTaskId = g.id and u.userID = ? ORDER BY u.createdAt DESC', [userId], (err, results) => {
     if (err) {
       cb(err);
     } else {
@@ -38,5 +38,14 @@ const getUserTasks = (userId, cb) => {
   });
 };
 
+const markUserTaskComplete = (userTaskId, globalTaskId, cb) => {
+  connection.query('UPDATE userTasks SET checkedOff = true WHERE id = ?', [userTaskId], () => {
+    connection.query('UPDATE globalTasks SET completed = completed + 1 WHERE id = ?', [globalTaskId], () => {
+      cb();
+    });
+  });
+};
+
 module.exports.addUserTask = addUserTask;
 module.exports.getUserTasks = getUserTasks;
+module.exports.markUserTaskComplete = markUserTaskComplete;

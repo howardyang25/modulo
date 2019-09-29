@@ -7,7 +7,7 @@ const UserTaskList = () => {
   const [userTasks, setUserTasks] = useState([]);
 
   useEffect(() => {
-    const path = window.location.pathname.slice(7);
+    const path = window.location.pathname.slice(7).replace(/\/$/g, '');
     axios.get('/api/session')
       .then((res) => {
         if (res.data.username === path) {
@@ -36,21 +36,6 @@ const UserTaskList = () => {
       })}
     </div>
   );
-
-  // return (
-  //   <div>
-  //     My Tasks
-  //   </div>
-  // );
-  // return (
-  //   <div>
-  //     <button type="button" onClick={sortByAccepted}>Sort by Upvotes</button>
-  //     <button type="button" onClick={sortByRecent}>Sort by Recent</button>
-  //     {tasks.map((task) => {
-  //       return <Task task={task} key={task.id} />;
-  //     })}
-  //   </div>
-  // );
 };
 
 export default UserTaskList;
