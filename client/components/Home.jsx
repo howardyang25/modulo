@@ -16,14 +16,6 @@ const Home = () => {
   useEffect(() => {
     getGlobalTasks('accepted');
   }, []);
-  
-
-  const handleClick = () => {
-    axios.get('/api/session')
-      .then((res) => {
-        console.log(res.data);
-      });
-  };
 
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
@@ -35,6 +27,9 @@ const Home = () => {
         console.log('submitting task: ' + description);
         getGlobalTasks('createdAt');
         setDescription('');
+      })
+      .catch(() => {
+        window.location = '/login';
       });
   };
 
@@ -53,7 +48,6 @@ const Home = () => {
         <textarea name="description" cols="40" rows="5" onChange={handleDescriptionChange} value={description} />
         <button type="button" onClick={handleSubmit}>Share</button>
       </form>
-      <button type="button" onClick={handleClick}>Click Me To Confirm User</button>
       <TaskList tasks={tasks} sortByAccepted={sortByAccepted} sortByRecent={sortByRecent} />
     </div>
   );
