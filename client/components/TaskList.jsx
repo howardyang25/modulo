@@ -8,7 +8,6 @@ const TaskList = () => {
   useEffect(() => {
     axios.get('/api/global-tasks')
       .then((res) => {
-        console.log(res.data);
         setTasks(res.data);
       });
   }, []);

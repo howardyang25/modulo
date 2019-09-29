@@ -1,33 +1,44 @@
-const Sequelize = require('sequelize');
-const bcrypt = require('bcryptjs');
+// const Sequelize = require('sequelize');
+const mysql = require('mysql');
 
-const sequelize = new Sequelize('modulo', 'root', '', {
-  dialect: 'mysql',
-  port: 3306,
+// const sequelize = new Sequelize('modulo', 'root', '', {
+//   dialect: 'mysql',
+//   port: 3306,
+// });
+
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'modulo',
 });
 
-const GlobalTask = sequelize.define('globalTask', {
-  description: Sequelize.STRING,
-  createdBy: Sequelize.INTEGER,
-  upvotes: Sequelize.INTEGER,
-  accepted: Sequelize.INTEGER,
-  completed: Sequelize.INTEGER,
-});
+connection.connect();
+
+// const GlobalTask = sequelize.define('globalTask', {
+//   description: Sequelize.STRING,
+//   createdBy: Sequelize.INTEGER,
+//   upvotes: Sequelize.INTEGER,
+//   accepted: Sequelize.INTEGER,
+//   completed: Sequelize.INTEGER,
+// });
 
 const addGlobalTask = ({ userId, description }) => {
-  return GlobalTask.create({
-    description,
-    createdBy: userId,
-    upvotes: 0,
-    accepted: 0,
-    completed: 0,
+  return Promise.resolve(connection.query('INSERT INTO globalTasks (createdBy, description, upvotes, accepted, completed) VALUES (?, ?, 0, 0, 0);',
+    [userId, description]));
+};
+
+const getGlobalTasks = (cb) => {
+  connection.query('Select g.id, u.username, g.description, g.upvotes, g.accepted, g.completed, g.createdAt FROM users u INNER JOIN globalTasks g ON u.id = g.createdBy', (err, results) => {
+    if (err) {
+      cb(err);
+    } else {
+      cb(null, results);
+    }
   });
 };
 
-const getGlobalTasks = () => {
-  return GlobalTask.findAll();
-};
-
+// select g.id, u.username, g.description, g.upvotes, g.accepted, g.completed, g.createdAt FROM users u INNER JOIN globalTasks g ON u.id = g.createdBy;
 // const getUserByUsername = (username) => {
 //   return User.findOne({ where: { username } });
 // };

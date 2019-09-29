@@ -28,10 +28,7 @@ const Home = () => {
     <div>
       <h1>Home Page</h1>
       <form>
-        <label htmlFor="description">
-          Description
-          <textarea name="description" cols="40" rows="5" onChange={handleDescriptionChange} value={description} />
-        </label>
+        <textarea name="description" cols="40" rows="5" onChange={handleDescriptionChange} value={description} />
         <button type="button" onClick={handleSubmit}>Share</button>
       </form>
       <button type="button" onClick={handleClick}>Click Me To Confirm User</button>

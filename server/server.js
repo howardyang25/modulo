@@ -38,13 +38,13 @@ app.get('/api/logout', (req, res) => {
 });
 
 app.get('/api/global-tasks', (req, res) => {
-  getGlobalTasks()
-    .then((tasks) => {
-      res.send(tasks);
-    })
-    .catch((err) => {
-      res.status(400).send(err);
-    });
+  getGlobalTasks((err, response) => {
+    if (err) {
+      res.send(err);
+    }
+
+    res.send(response);
+  });
 });
 
 app.get('*', (req, res) => {
