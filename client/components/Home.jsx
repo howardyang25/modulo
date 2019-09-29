@@ -44,7 +44,7 @@ const Home = () => {
 
   const sortByRecent = () => {
     getGlobalTasks('createdAt');
-  }
+  };
 
   return (
     <div>

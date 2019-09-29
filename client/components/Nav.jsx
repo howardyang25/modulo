@@ -29,13 +29,11 @@ const NavBar = () => {
   const getLoggedInUser = () => {
     axios.get('/api/session')
       .then((res) => {
-        console.log(res.data);
         setUser(res.data.username);
       });
   };
 
   useEffect(() => {
-    console.log('using effect');
     getLoggedInUser();
   });
 
@@ -47,7 +45,7 @@ const NavBar = () => {
         <Link style={navStyle} to="/">
           <li>Home</li>
         </Link>
-        <Link style={navStyle} to={`/users/${user}`}>
+        <Link style={navStyle} to={user ? `/users/${user}` : '/login'}>
           <li>My tasks</li>
         </Link>
         <Link style={navStyle} to="/login">

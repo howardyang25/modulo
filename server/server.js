@@ -18,6 +18,7 @@ app.listen(port, () => {
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use('/users/:username', express.static(path.resolve(__dirname, '..', 'public')));
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
