@@ -11,9 +11,9 @@ const Logout = () => {
   });
 
   return (
-    <div>
-      Logout Page
-    </div>
+    <h1>
+      Logging out...
+    </h1>
   );
 };
 
