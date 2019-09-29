@@ -14,14 +14,16 @@ const addUserTask = (userId, globalTaskId, cb) => {
     [userId, globalTaskId],
     (err, result) => {
       if (result.length === 0) {
-        connection.query('INSERT INTO userTasks (userId, globalTaskId, checkedOff) VALUES (?, ?, false);',
-          [userId, globalTaskId], (error, results) => {
-            if (error) {
-              cb(error);
-            } else {
-              cb(null, results);
-            }
-          });
+        connection.query('UPDATE globalTasks SET accepted = accepted + 1 WHERE id = ?', [globalTaskId], () => {
+          connection.query('INSERT INTO userTasks (userId, globalTaskId, checkedOff) VALUES (?, ?, false);',
+            [userId, globalTaskId], (error, results) => {
+              if (error) {
+                cb(error);
+              } else {
+                cb(null, results);
+              }
+            });
+        });
       }
     });
 };

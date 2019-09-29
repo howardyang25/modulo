@@ -4,8 +4,6 @@ import axios from 'axios';
 const Task = ({ task, userId }) => {
   const {id, description, username, accepted, completed, createdAt } = task;
   const handleAcceptTask = () => {
-    console.log('globalTaskId: ' + id);
-    console.log('userId' + userId);
     const body = {
       userId,
       globalTaskId: id,
@@ -30,7 +28,7 @@ const Task = ({ task, userId }) => {
         <li>Accepted: {accepted}</li>
         <li>Completed: {completed}</li>
       </ul>
-      <button onClick={handleAcceptTask}>Accept This Task</button>
+      {userId ? <button onClick={handleAcceptTask}>Accept This Task</button> : ''}
     </div>
   );
 };
