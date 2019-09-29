@@ -12,7 +12,6 @@ const TaskList = ({ tasks, sortByAccepted, sortByRecent }) => {
   };
 
   useEffect(() => {
-    console.log('using effect');
     getLoggedInUser();
   });
 

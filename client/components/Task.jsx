@@ -8,12 +8,9 @@ const Task = ({ task, userId }) => {
       userId,
       globalTaskId: id,
     };
-    
+
     if (userId !== undefined) {
       axios.post('/api/user-tasks', body)
-        .then((response) => {
-          console.log(response);
-        })
         .catch((err) => {
           console.err(err);
         });

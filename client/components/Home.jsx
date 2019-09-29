@@ -24,7 +24,6 @@ const Home = () => {
   const handleSubmit = () => {
     axios.post('/api/global-tasks', { description })
       .then(() => {
-        console.log('submitting task: ' + description);
         getGlobalTasks('createdAt');
         setDescription('');
       })

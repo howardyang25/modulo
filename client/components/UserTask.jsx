@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Task = ({ task }) => {
-  console.log(task);
   const { id, globalTaskId, description, checkedOff, createdAt, updatedAt, accepted, completed } = task;
   const [isTaskComplete, setIsTaskComplete] = useState(!!checkedOff);
   
