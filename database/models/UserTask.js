@@ -14,7 +14,7 @@ const addUserTask = (userId, globalTaskId, cb) => {
     [userId, globalTaskId],
     (err, result) => {
       if (result.length === 0) {
-        connection.query('INSERT INTO userTasks (userId, globalTaskId, completed) VALUES (?, ?, false);',
+        connection.query('INSERT INTO userTasks (userId, globalTaskId, checkedOff) VALUES (?, ?, false);',
           [userId, globalTaskId], (error, results) => {
             if (error) {
               cb(error);
@@ -26,8 +26,8 @@ const addUserTask = (userId, globalTaskId, cb) => {
     });
 };
 
-const getUserTasks = (sortQuery, cb) => {
-  connection.query(`Select g.id, u.username, g.description, g.accepted, g.completed, g.createdAt FROM users u INNER JOIN globalTasks g ON u.id = g.createdBy ORDER BY ${sortQuery} DESC`, (err, results) => {
+const getUserTasks = (userId, cb) => {
+  connection.query('SELECT u.id, u.checkedOff, u.createdAt, u.updatedAt, g.description, g.accepted, g.completed FROM globalTasks g INNER JOIN userTasks u WHERE u.globalTaskId = g.id and u.userID = ? ORDER BY u.createdAt DESC', [userId], (err, results) => {
     if (err) {
       cb(err);
     } else {

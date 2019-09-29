@@ -7,7 +7,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { addUser, getUserByUsername, getUserById, comparePassword } = require('../database/models/User.js');
 const { addGlobalTask, getGlobalTasks } = require('../database/models/GlobalTask.js');
-const { addUserTask } = require('../database/models/UserTask.js');
+const { addUserTask, getUserTasks } = require('../database/models/UserTask.js');
 
 const app = express();
 const port = 3000;
@@ -41,6 +41,16 @@ app.get('/api/logout', (req, res) => {
 
 app.get('/api/global-tasks', (req, res) => {
   getGlobalTasks(req.query.sort, (err, response) => {
+    if (err) {
+      res.send(err);
+    }
+
+    res.send(response);
+  });
+});
+
+app.get('/api/:userid/user-tasks', (req, res) => {
+  getUserTasks(req.params.userid, (err, response) => {
     if (err) {
       res.send(err);
     }
