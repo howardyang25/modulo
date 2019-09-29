@@ -5,7 +5,6 @@ const Logout = () => {
   useEffect(() => {
     axios.get('/api/logout')
       .then((() => {
-        alert('You have been logged out');
         window.location = '/login';
       }));
   });

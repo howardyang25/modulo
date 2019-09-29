@@ -15,9 +15,9 @@ const App = () => {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/login" component={Login} />
-          <Route path="/:username" exact component={UserTaskList} />
           <Route path="/register" component={Register} />
           <Route path="/logout" component={Logout} />
+          <Route path="/users/:username" exact component={UserTaskList} />
         </Switch>
       </div>
     </Router>

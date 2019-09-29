@@ -47,7 +47,7 @@ const NavBar = () => {
         <Link style={navStyle} to="/">
           <li>Home</li>
         </Link>
-        <Link style={navStyle} to={`/${user}`}>
+        <Link style={navStyle} to={`/users/${user}`}>
           <li>My tasks</li>
         </Link>
         <Link style={navStyle} to="/login">

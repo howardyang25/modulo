@@ -5,7 +5,7 @@ const UserTaskList = () => {
   const [isValidated, setIsValidated] = useState(false);
 
   useEffect(() => {
-    const path = window.location.pathname.slice(1);
+    const path = window.location.pathname.slice(7);
     axios.get('/api/session')
       .then((res) => {
         if (res.data.username === path) {
