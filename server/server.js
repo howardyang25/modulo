@@ -5,7 +5,8 @@ const { check, validationResult } = require('express-validator');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const { addUser, getUserByUsername, getUserById, comparePassword } = require('../database/index.js');
+const { addUser, getUserByUsername, getUserById, comparePassword } = require('../database/models/User.js');
+const { addGlobalTask, getGlobalTasks } = require('../database/models/GlobalTask.js');
 
 const app = express();
 const port = 3000;
@@ -17,6 +18,7 @@ app.listen(port, () => {
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use('/users/:username', express.static(path.resolve(__dirname, '..', 'public')));
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
@@ -36,8 +38,29 @@ app.get('/api/logout', (req, res) => {
   res.end();
 });
 
+app.get('/api/global-tasks', (req, res) => {
+  getGlobalTasks(req.query.sort, (err, response) => {
+    if (err) {
+      res.send(err);
+    }
+
+    res.send(response);
+  });
+});
+
 app.get('*', (req, res) => {
   res.sendFile('index.html', { root: path.resolve(__dirname, '..', 'public') });
+});
+
+app.post('/api/global-tasks', (req, res) => {
+  req.body.userId = req.user.dataValues.id;
+  addGlobalTask(req.body)
+    .then(() => {
+      res.status(201).send('Success');
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
 });
 
 app.post('/register', [

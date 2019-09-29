@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import axios from 'axios';
 
 const Login = () => {
@@ -12,7 +11,6 @@ const Login = () => {
       .then((res) => {
         const user = res.data;
         if (user) {
-          alert(`You are logged in as: ${user.username}`);
           window.location = '/';
         }
 
