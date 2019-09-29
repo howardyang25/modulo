@@ -1,9 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TaskList from './TaskList.jsx';
 
 const Home = () => {
   const [description, setDescription] = useState('');
+  const [tasks, setTasks] = useState([]);
+
+  const getGlobalTasks = (sortQuery) => {
+    axios.get(`/api/global-tasks?sort=${sortQuery}`)
+      .then((res) => {
+        setTasks(res.data);
+      });
+  };
+
+  useEffect(() => {
+    getGlobalTasks('accepted');
+  }, []);
+  
 
   const handleClick = () => {
     axios.get('/api/session')
@@ -20,9 +33,18 @@ const Home = () => {
     axios.post('/api/global-tasks', { description })
       .then(() => {
         console.log('submitting task: ' + description);
+        getGlobalTasks('createdAt');
         setDescription('');
       });
   };
+
+  const sortByAccepted = () => {
+    getGlobalTasks('accepted');
+  };
+
+  const sortByRecent = () => {
+    getGlobalTasks('createdAt');
+  }
 
   return (
     <div>
@@ -32,7 +54,7 @@ const Home = () => {
         <button type="button" onClick={handleSubmit}>Share</button>
       </form>
       <button type="button" onClick={handleClick}>Click Me To Confirm User</button>
-      <TaskList />
+      <TaskList tasks={tasks} sortByAccepted={sortByAccepted} sortByRecent={sortByRecent} />
     </div>
   );
 };

@@ -2,18 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Task from './Task.jsx';
 
-const TaskList = () => {
-  const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    axios.get('/api/global-tasks')
-      .then((res) => {
-        setTasks(res.data);
-      });
-  }, []);
-
+const TaskList = ({ tasks, sortByAccepted, sortByRecent }) => {
   return (
     <div>
+      <button type="button" onClick={sortByAccepted}>Sort by Upvotes</button>
+      <button type="button" onClick={sortByRecent}>Sort by Recent</button>
       {tasks.map((task) => {
         return <Task task={task} key={task.id} />;
       })}

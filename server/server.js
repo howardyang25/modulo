@@ -38,7 +38,7 @@ app.get('/api/logout', (req, res) => {
 });
 
 app.get('/api/global-tasks', (req, res) => {
-  getGlobalTasks((err, response) => {
+  getGlobalTasks(req.query.sort, (err, response) => {
     if (err) {
       res.send(err);
     }

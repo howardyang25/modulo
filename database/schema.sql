@@ -17,7 +17,6 @@ CREATE TABLE IF NOT EXISTS globalTasks (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     createdBy INT,
     description VARCHAR(140),
-    upvotes SMALLINT,
     accepted SMALLINT,
     completed SMALLINT,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,

@@ -24,12 +24,12 @@ connection.connect();
 // });
 
 const addGlobalTask = ({ userId, description }) => {
-  return Promise.resolve(connection.query('INSERT INTO globalTasks (createdBy, description, upvotes, accepted, completed) VALUES (?, ?, 0, 0, 0);',
+  return Promise.resolve(connection.query('INSERT INTO globalTasks (createdBy, description, accepted, completed) VALUES (?, ?, 0, 0);',
     [userId, description]));
 };
 
-const getGlobalTasks = (cb) => {
-  connection.query('Select g.id, u.username, g.description, g.upvotes, g.accepted, g.completed, g.createdAt FROM users u INNER JOIN globalTasks g ON u.id = g.createdBy', (err, results) => {
+const getGlobalTasks = (sortQuery, cb) => {
+  connection.query(`Select g.id, u.username, g.description, g.accepted, g.completed, g.createdAt FROM users u INNER JOIN globalTasks g ON u.id = g.createdBy ORDER BY ${sortQuery} DESC`, (err, results) => {
     if (err) {
       cb(err);
     } else {
