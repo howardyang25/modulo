@@ -51,10 +51,25 @@ const MarkCompleteButton = styled.button`
   border-radius: 25px;
 `;
 
+const Button = styled.button`
+  font-family: sans-serif;
+  font-size: 20px;
+  background-color: #70587C;
+  padding: 10px;
+  margin: 10px;
+  margin-left: 0px;
+  color: white;
+`;
+
+const Input = styled.input`
+  font-size: 20px;
+`;
+
 const Task = ({ task }) => {
   const { id, globalTaskId, description, checkedOff, createdAt, updatedAt, accepted, completed } = task;
   const [isTaskComplete, setIsTaskComplete] = useState(!!checkedOff);
   const [showToolTip, setShowToolTip] = useState(false);
+  const [shoutoutInput, setShoutoutInput] = useState('');
   
   let percentComplete;
   if (accepted === 0) {
@@ -80,6 +95,40 @@ const Task = ({ task }) => {
     setShowToolTip(false);
   };
 
+  const sendShoutout = () => {
+    if (shoutoutInput === '') {
+      return;
+    }
+
+    const body = {
+      globalTaskId,
+      id,
+      message: shoutoutInput,
+    };
+
+
+    axios.post('/api/shoutouts', body)
+      .then(() => {
+        setShoutoutInput('');
+        console.log('shoutout sent');
+      });
+  };
+
+  const handleShoutoutChange = (e) => {
+    setShoutoutInput(e.target.value);
+  };
+
+  const checkForShoutout = () => {
+    axios.get(`/api/shoutouts/${id}`)
+      .then((res) => {
+        if (res.data[0] !== undefined) {
+          alert(res.data[0].message);
+        } else {
+          alert('No shoutouts for you at this time, but your dog loves you');
+        }
+      });
+  };
+
   return (
     <Container>
       <div>
@@ -91,6 +140,13 @@ const Task = ({ task }) => {
         <ToolTip showToolTip={showToolTip}> {completed} out of {accepted} users have completed this task!</ToolTip>
       </div>
       <ProgressPic src={isTaskComplete ? 'https://howard-yang-modulo.s3-us-west-1.amazonaws.com/tree.jpg' : 'https://howard-yang-modulo.s3-us-west-1.amazonaws.com/sprout.jpg'} />
+      <div>
+        <form>
+          <Input type="text" onChange={handleShoutoutChange} value={shoutoutInput} />
+          <Button type="Button" onClick={sendShoutout}>Send a shoutout!</Button>
+        </form>
+        <Button onClick={checkForShoutout}>Any shoutouts?</Button>
+      </div>
     </Container>
   );
 };
