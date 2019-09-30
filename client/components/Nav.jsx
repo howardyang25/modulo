@@ -8,7 +8,8 @@ const Nav = styled.nav`
   justify-content: space-around;
   align-items: center;
   min-height: 10vh;
-  background: blue;
+  background: #502F4C;
+  font-family: sans-serif;
   color: white;
 `;
 
@@ -24,6 +25,7 @@ const NavBar = () => {
   const [user, setUser] = useState('');
   const navStyle = {
     color: 'white',
+    textDecoration: 'none',
   };
   
   const getLoggedInUser = () => {
@@ -57,7 +59,9 @@ const NavBar = () => {
         <Link style={navStyle} to="/logout">
           <li>Logout</li>
         </Link>
-        { user ? <li>Logged in as: {user}</li> : '' }
+        <div>
+          { user ? <li>Logged in as: {user}</li> : '' }
+        </div>
       </List>
     </Nav>
   );
