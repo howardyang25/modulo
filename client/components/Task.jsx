@@ -5,19 +5,21 @@ import moment from 'moment';
 
 const Container = styled.div`
   background-color: #C8B8DB;
-  margin: 10px;
+  margin: 20px;
   font-family: sans-serif;
+  padding: 5px;
+  width: 50vw;
 `;
 
 const AcceptBar = styled.div`
   background-color: #F9F4F5;
   width: 100px;
   height: 20px;
+  margin: 10px;
 `;
 
 const CompleteBar = styled.div`
   background-color: #000000;
-  margin-top: 10px;
   height: 20px;
   width: ${props => props.width};
 `;
@@ -51,7 +53,13 @@ const Task = ({ task, userId }) => {
   const [showToolTip, setShowToolTip] = useState(false);
 
   const {id, description, username, accepted, completed, createdAt } = task;
-  const percentComplete = 100 * (completed / accepted);
+  let percentComplete;
+  if (accepted === 0) {
+    percentComplete = 0;
+  } else {
+    percentComplete = 100 * (completed / accepted);
+  }
+
   const handleAcceptTask = () => {
     const body = {
       userId,
@@ -84,7 +92,7 @@ const Task = ({ task, userId }) => {
         </UsernameAndTime>
       </Header>
       <Description>{description}</Description>
-      Global Progress: 
+      <p>  Global Progress: </p> 
       <AcceptBar onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}><CompleteBar width={percentComplete + 'px'} /></AcceptBar>
       <ToolTip showToolTip={showToolTip}> {completed} out of {accepted} users have completed this task!</ToolTip>
       {userId ? <button onClick={handleAcceptTask}>Accept This Task</button> : ''}

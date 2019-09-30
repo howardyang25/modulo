@@ -1,6 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import TaskList from './TaskList.jsx';
+
+const ShareButton = styled.button`
+  font-size: 20px;
+  border-radius: 10px;
+  margin: 5px;
+  background-color: #F9F4F5;
+`;
+
+const Heading = styled.h2`
+  font-family: sans-serif;
+`;
+
+const TextArea = styled.textarea`
+  font-size: 20px;
+`;
 
 const Home = () => {
   const [description, setDescription] = useState('');
@@ -42,10 +58,10 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Home Page</h1>
+      <Heading>Share Task</Heading>
       <form>
-        <textarea name="description" cols="40" rows="5" onChange={handleDescriptionChange} value={description} />
-        <button type="button" onClick={handleSubmit}>Share</button>
+        <TextArea name="description" cols="30" rows="3" onChange={handleDescriptionChange} value={description} />
+        <ShareButton type="button" onClick={handleSubmit}>Share</ShareButton>
       </form>
       <TaskList tasks={tasks} sortByAccepted={sortByAccepted} sortByRecent={sortByRecent} />
     </div>
