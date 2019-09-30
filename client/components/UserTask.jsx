@@ -55,6 +55,7 @@ const Task = ({ task }) => {
   const { id, globalTaskId, description, checkedOff, createdAt, updatedAt, accepted, completed } = task;
   const [isTaskComplete, setIsTaskComplete] = useState(!!checkedOff);
   const [showToolTip, setShowToolTip] = useState(false);
+  const [shoutoutInput, setShoutoutInput] = useState('');
   
   let percentComplete;
   if (accepted === 0) {
@@ -80,6 +81,24 @@ const Task = ({ task }) => {
     setShowToolTip(false);
   };
 
+  const sendShoutout = () => {
+    const body = {
+      globalTaskId,
+      id,
+      message: shoutoutInput,
+    };
+    
+    axios.post('/api/shoutouts', body)
+      .then(() => {
+        setShoutoutInput('');
+        console.log('shoutout sent');
+      });
+  };
+
+  const handleShoutoutChange = (e) => {
+    setShoutoutInput(e.target.value);
+  }
+
   return (
     <Container>
       <div>
@@ -91,6 +110,10 @@ const Task = ({ task }) => {
         <ToolTip showToolTip={showToolTip}> {completed} out of {accepted} users have completed this task!</ToolTip>
       </div>
       <ProgressPic src={isTaskComplete ? 'https://howard-yang-modulo.s3-us-west-1.amazonaws.com/tree.jpg' : 'https://howard-yang-modulo.s3-us-west-1.amazonaws.com/sprout.jpg'} />
+      <form>
+        <input type="text" onChange={handleShoutoutChange} value={shoutoutInput}/>
+        <button type="button" onClick={sendShoutout}>Send a shoutout!</button>
+      </form>
     </Container>
   );
 };

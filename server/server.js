@@ -96,7 +96,8 @@ app.put('/api/user-tasks/:id', (req, res) => {
 });
 
 app.post('/api/shoutouts', (req, res) => {
-  addShoutout(1, 1, () => {
+  const { globalTaskId, userTaskId, message } = req.body;
+  addShoutout(globalTaskId, userTaskId, message, () => {
     res.status(201).send('success');
   });
 });
