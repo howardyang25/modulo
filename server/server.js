@@ -8,7 +8,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const { addUser, getUserByUsername, getUserById, comparePassword } = require('../database/models/User.js');
 const { addGlobalTask, getGlobalTasks } = require('../database/models/GlobalTask.js');
 const { addUserTask, getUserTasks, markUserTaskComplete } = require('../database/models/UserTask.js');
-const { addShoutout } = require('../database/models/Shoutout.js');
+const { addShoutout, getShoutouts } = require('../database/models/Shoutout.js');
 
 const app = express();
 const port = 3000;
@@ -57,6 +57,16 @@ app.get('/api/:userid/user-tasks', (req, res) => {
     }
 
     res.send(response);
+  });
+});
+
+app.get('/api/shoutouts/:userTaskId', (req, res) => {
+  getShoutouts(req.params.userTaskId, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+
+    res.send(result);
   });
 });
 

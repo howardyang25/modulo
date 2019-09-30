@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import UserTask from './UserTask.jsx';
+
+const Heading = styled.h2`
+  font-family: sans-serif;
+`;
 
 const UserTaskList = () => {
   const [isValidated, setIsValidated] = useState(false);
@@ -30,7 +35,7 @@ const UserTaskList = () => {
 
   return (
     <div>
-      <h1>My Tasks</h1>
+      <Heading>My Tasks</Heading>
       {userTasks.map((task) => {
         return <UserTask task={task} key={task.id} />;
       })}
