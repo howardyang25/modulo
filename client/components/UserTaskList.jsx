@@ -22,9 +22,10 @@ const AuthFailedMessage = styled.div`
 const UserTaskList = () => {
   const [isValidated, setIsValidated] = useState(false);
   const [userTasks, setUserTasks] = useState([]);
+  const path = window.location.pathname.slice(7).replace(/\/$/g, '');
 
   useEffect(() => {
-    const path = window.location.pathname.slice(7).replace(/\/$/g, '');
+    // const path = window.location.pathname.slice(7).replace(/\/$/g, '');
     axios.get('/api/session')
       .then((res) => {
         if (res.data.username === path) {
@@ -38,7 +39,7 @@ const UserTaskList = () => {
         }
       });
   }, []);
-
+  
   if (!isValidated) {
     return (
       <AuthFailedMessage>Authentication failed. Logged in user does not match.</AuthFailedMessage>
@@ -51,6 +52,10 @@ const UserTaskList = () => {
       {userTasks.map((task) => {
         return <UserTask task={task} key={task.id} />;
       })}
+      <form>
+        <input type="file" name="avatar" />
+        <input type="submit" formAction={`/api/users/${path}/avatar`} formEncType="multipart/form-data" formMethod="post" formTarget="_blank" />
+      </form>
     </Container>
   );
 };

@@ -5,13 +5,37 @@ const { check, validationResult } = require('express-validator');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const multer = require('multer');
+const aws = require('aws-sdk');
+const multerS3 = require('multer-s3');
 const { addUser, getUserByUsername, getUserById, comparePassword } = require('../database/models/User.js');
 const { addGlobalTask, getGlobalTasks } = require('../database/models/GlobalTask.js');
 const { addUserTask, getUserTasks, markUserTaskComplete } = require('../database/models/UserTask.js');
 const { addShoutout, getShoutouts } = require('../database/models/Shoutout.js');
 
+
 const app = express();
 const port = 3000;
+const config = new aws.Config({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: 'us-west-1',
+});
+const s3 = new aws.S3({ apiVersion: '2006-03-01' });
+
+const upload = multer({
+  storage: multerS3({
+    s3,
+    bucket: 'howard-yang-modulo',
+    acl: 'public-read',
+    metadata: (req, file, cb) => {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: (req, file, cb) => {
+      cb(null, `${req.params.username}.jpg`);
+    },
+  }),
+});
 
 app.listen(port, () => {
   console.log(`Modulo is listening on port ${port}!`);
@@ -109,6 +133,11 @@ app.post('/api/shoutouts', (req, res) => {
   addShoutout(globalTaskId, userTaskId, message, () => {
     res.status(201).send('success');
   });
+});
+
+app.post('/api/users/:username/avatar', upload.single('avatar'), (req, res) => {
+  console.log(req.file);
+  res.status(201).send('Profile picture uploaded successfully!');
 });
 
 app.post('/register', [

@@ -92,12 +92,12 @@ const Task = ({ task, userId }) => {
   const handleMouseLeave = () => {
     setShowToolTip(true);
   };
-  
+
   return (
     <Container>
       <div>
         <Header>
-          <ProfilePicture src="https://howard-yang-modulo.s3-us-west-1.amazonaws.com/1.jpg" />
+          <ProfilePicture src={`https://howard-yang-modulo.s3-us-west-1.amazonaws.com/${username}.jpg`} />
           <UsernameAndTime>
             <div>Shared by: {username}</div>
             <div>{moment(createdAt).fromNow()}</div>
