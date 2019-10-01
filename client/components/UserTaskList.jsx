@@ -10,6 +10,7 @@ const Heading = styled.h2`
 const Container = styled.div`
   padding: 30px;
   margin-top: 50px;
+  display: flex;
 `;
 
 const AuthFailedMessage = styled.div`
@@ -19,13 +20,24 @@ const AuthFailedMessage = styled.div`
   padding: 30px;
 `;
 
+const UploadAvatar = styled.div`
+  padding: 30px;
+  position: fixed;
+  top: 80px;
+  right: 140px;
+`;
+
+// const Form = styled.form`
+//   margin: 10px;
+//   margin-left: 0px;
+// `;
+
 const UserTaskList = () => {
   const [isValidated, setIsValidated] = useState(false);
   const [userTasks, setUserTasks] = useState([]);
   const path = window.location.pathname.slice(7).replace(/\/$/g, '');
 
   useEffect(() => {
-    // const path = window.location.pathname.slice(7).replace(/\/$/g, '');
     axios.get('/api/session')
       .then((res) => {
         if (res.data.username === path) {
@@ -48,14 +60,19 @@ const UserTaskList = () => {
 
   return (
     <Container>
-      <Heading>My Tasks</Heading>
-      {userTasks.map((task) => {
-        return <UserTask task={task} key={task.id} />;
-      })}
-      <form>
-        <input type="file" name="avatar" />
-        <input type="submit" formAction={`/api/users/${path}/avatar`} formEncType="multipart/form-data" formMethod="post" formTarget="_blank" />
-      </form>
+      <div>
+        <Heading>My Tasks</Heading>
+        {userTasks.map((task) => {
+          return <UserTask task={task} key={task.id} />;
+        })}
+      </div>
+      <UploadAvatar>
+        <Heading>Upload Profile Picture</Heading>
+        <form>
+          <input type="file" name="avatar" />
+          <input type="submit" formAction={`/api/users/${path}/avatar`} formEncType="multipart/form-data" formMethod="post" formTarget="_blank" />
+        </form>
+      </UploadAvatar>
     </Container>
   );
 };

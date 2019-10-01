@@ -72,7 +72,7 @@ const Shoutout = styled.div`
 const Task = ({ task }) => {
   const { id, globalTaskId, description, checkedOff, createdAt, updatedAt, accepted, completed } = task;
   const [isTaskComplete, setIsTaskComplete] = useState(!!checkedOff);
-  const [showToolTip, setShowToolTip] = useState(false);
+  const [showToolTip, setShowToolTip] = useState(true);
   const [shoutoutInput, setShoutoutInput] = useState('');
   
   let percentComplete;
@@ -96,7 +96,7 @@ const Task = ({ task }) => {
   };
 
   const handleMouseLeave = () => {
-    setShowToolTip(false);
+    setShowToolTip(true);
   };
 
   const sendShoutout = () => {
@@ -143,7 +143,7 @@ const Task = ({ task }) => {
         <AcceptBar onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}><CompleteBar width={percentComplete + 'px'} /></AcceptBar>
         <ToolTip showToolTip={showToolTip}> {completed} out of {accepted} users have completed this task!</ToolTip>
       </div>
-      <ProgressPic src={isTaskComplete ? 'https://howard-yang-modulo.s3-us-west-1.amazonaws.com/tree.jpg' : 'https://howard-yang-modulo.s3-us-west-1.amazonaws.com/sprout.jpg'} />
+      <ProgressPic src={isTaskComplete ? 'https://howard-yang-modulo.s3-us-west-1.amazonaws.com/tree.jpeg' : 'https://howard-yang-modulo.s3-us-west-1.amazonaws.com/sprout.jpeg'} />
       <Shoutout>
         <form>
           <Input type="text" onChange={handleShoutoutChange} value={shoutoutInput} />
