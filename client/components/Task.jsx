@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 
 const Container = styled.div`
+  display: flex;
   background-color: #C8B8DB;
   margin: 20px;
   font-family: sans-serif;
@@ -49,8 +50,18 @@ const Description = styled.div`
   font-size: 30px;
 `;
 
+const AcceptTaskButton = styled.button`
+  background-color: #F9F4F5;
+  font-size: 20px;
+  height: 50px;
+  border-radius: 25px;
+  margin-left: 120px;
+  margin-top: 80px;
+  padding: 10px;
+`;
+
 const Task = ({ task, userId }) => {
-  const [showToolTip, setShowToolTip] = useState(false);
+  const [showToolTip, setShowToolTip] = useState(true);
 
   const {id, description, username, accepted, completed, createdAt } = task;
   let percentComplete;
@@ -79,23 +90,25 @@ const Task = ({ task, userId }) => {
   };
 
   const handleMouseLeave = () => {
-    setShowToolTip(false);
+    setShowToolTip(true);
   };
   
   return (
     <Container>
-      <Header>
-        <ProfilePicture src="https://howard-yang-modulo.s3-us-west-1.amazonaws.com/1.jpg" />
-        <UsernameAndTime>
-          <div>Shared by: {username}</div>
-          <div>{moment(createdAt).fromNow()}</div>
-        </UsernameAndTime>
-      </Header>
-      <Description>{description}</Description>
-      <p>  Global Progress: </p> 
-      <AcceptBar onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}><CompleteBar width={percentComplete + 'px'} /></AcceptBar>
-      <ToolTip showToolTip={showToolTip}> {completed} out of {accepted} users have completed this task!</ToolTip>
-      {userId ? <button onClick={handleAcceptTask}>Accept This Task</button> : ''}
+      <div>
+        <Header>
+          <ProfilePicture src="https://howard-yang-modulo.s3-us-west-1.amazonaws.com/1.jpg" />
+          <UsernameAndTime>
+            <div>Shared by: {username}</div>
+            <div>{moment(createdAt).fromNow()}</div>
+          </UsernameAndTime>
+        </Header>
+        <Description>{description}</Description>
+        <p>  Global Progress: </p> 
+        <AcceptBar onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}><CompleteBar width={percentComplete + 'px'} /></AcceptBar>
+        <ToolTip showToolTip={showToolTip}> {completed} out of {accepted} users have completed this task!</ToolTip>
+      </div>
+      {userId ? <AcceptTaskButton onClick={handleAcceptTask}>Accept This Task</AcceptTaskButton> : ''}
     </Container>
   );
 };

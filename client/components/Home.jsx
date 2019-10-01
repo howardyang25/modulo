@@ -7,7 +7,8 @@ const ShareButton = styled.button`
   font-size: 20px;
   border-radius: 10px;
   margin: 5px;
-  background-color: #F9F4F5;
+  background-color: #85BDBF;
+  color: white;
   padding: 10px;
 `;
 
@@ -21,7 +22,15 @@ const TextArea = styled.textarea`
 `;
 
 const Container = styled.div`
+  display: flex;
   padding: 30px;
+  margin-top: 50px;
+`;
+
+const ShareContainer = styled.div`
+  position: fixed;
+  top: 100px;
+  right: 100px;
 `;
 
 const Home = () => {
@@ -64,12 +73,14 @@ const Home = () => {
 
   return (
     <Container>
-      <Heading>Share Task</Heading>
-      <form>
-        <TextArea name="description" cols="30" rows="3" onChange={handleDescriptionChange} value={description} />
-        <ShareButton type="button" onClick={handleSubmit}>Share</ShareButton>
-      </form>
       <TaskList tasks={tasks} sortByAccepted={sortByAccepted} sortByRecent={sortByRecent} />
+      <ShareContainer>
+        <Heading>Share Task</Heading>
+        <form>
+          <TextArea name="description" cols="30" rows="3" onChange={handleDescriptionChange} value={description} />
+          <ShareButton type="button" onClick={handleSubmit}>Share</ShareButton>
+        </form>
+      </ShareContainer>
     </Container>
   );
 };

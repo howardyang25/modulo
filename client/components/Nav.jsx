@@ -4,13 +4,17 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Nav = styled.nav`
+  position: fixed;
+  top: 0px;
+  width: 100vw;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  min-height: 10vh;
-  background: #502F4C;
+  min-height: 8vh;
+  background: #85BDBF;
   font-family: sans-serif;
   color: white;
+  z-index: 2;
 `;
 
 const List = styled.ul`

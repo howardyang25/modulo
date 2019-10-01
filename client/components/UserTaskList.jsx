@@ -9,6 +9,14 @@ const Heading = styled.h2`
 
 const Container = styled.div`
   padding: 30px;
+  margin-top: 50px;
+`;
+
+const AuthFailedMessage = styled.div`
+  margin-top: 50px;
+  font-family: sans-serif;
+  font-size: 30px;
+  padding: 30px;
 `;
 
 const UserTaskList = () => {
@@ -33,7 +41,7 @@ const UserTaskList = () => {
 
   if (!isValidated) {
     return (
-      <div>You do not have adequate permissions to view this page</div>
+      <AuthFailedMessage>Authentication failed. Logged in user does not match.</AuthFailedMessage>
     );
   }
 

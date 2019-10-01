@@ -5,6 +5,7 @@ import styled from 'styled-components';
 const Container = styled.div`
   padding: 30px;
   font-family: sans-serif;
+  margin-top: 50px;
 `;
 
 const Form = styled.form`
