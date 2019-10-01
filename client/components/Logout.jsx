@@ -1,5 +1,11 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const Heading = styled.h1`
+  font-family: sans-serif;
+  margin: 30px;
+`;
 
 const Logout = () => {
   useEffect(() => {
@@ -10,9 +16,9 @@ const Logout = () => {
   });
 
   return (
-    <h1>
+    <Heading>
       Logging out...
-    </h1>
+    </Heading>
   );
 };
 

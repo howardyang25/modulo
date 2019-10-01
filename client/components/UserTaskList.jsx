@@ -7,6 +7,10 @@ const Heading = styled.h2`
   font-family: sans-serif;
 `;
 
+const Container = styled.div`
+  padding: 30px;
+`;
+
 const UserTaskList = () => {
   const [isValidated, setIsValidated] = useState(false);
   const [userTasks, setUserTasks] = useState([]);
@@ -34,12 +38,12 @@ const UserTaskList = () => {
   }
 
   return (
-    <div>
+    <Container>
       <Heading>My Tasks</Heading>
       {userTasks.map((task) => {
         return <UserTask task={task} key={task.id} />;
       })}
-    </div>
+    </Container>
   );
 };
 

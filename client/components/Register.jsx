@@ -1,5 +1,28 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  padding: 30px;
+  font-family: sans-serif;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+`;
+
+const Button = styled.button`
+  font-family: sans-serif;
+  font-size: 20px;
+  background-color: #70587C;
+  padding: 10px;
+  margin: 10px;
+  margin-left: 0px;
+  color: white;
+  width: 100px;
+`;
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -33,9 +56,10 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <Container>
       <h1>Create an account</h1>
-      <form>
+      <br />
+      <Form>
         <label htmlFor="username">
           Username:
           <input type="text" name="username" onChange={handleUsernameChange} value={username} />
@@ -44,9 +68,9 @@ const Register = () => {
           Password:
           <input type="password" name="password" onChange={handlePasswordChange} value={password} />
         </label>
-        <button type="button" onClick={handleSubmit}>Submit</button>
-      </form>
-    </div>
+        <Button type="button" onClick={handleSubmit}>Submit</Button>
+      </Form>
+    </Container>
   );
 };
 

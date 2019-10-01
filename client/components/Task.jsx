@@ -7,7 +7,7 @@ const Container = styled.div`
   background-color: #C8B8DB;
   margin: 20px;
   font-family: sans-serif;
-  padding: 5px;
+  padding: 30px;
   width: 50vw;
 `;
 

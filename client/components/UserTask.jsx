@@ -8,8 +8,9 @@ const Container = styled.div`
   background-color: #C8B8DB;
   margin: 20px;
   font-family: sans-serif;
-  padding: 5px;
+  padding: 30px;
   width: 50vw;
+  min-width: 700px;
 `;
 
 const AcceptBar = styled.div`
@@ -33,8 +34,7 @@ const ProgressPic = styled.img`
   width: 200px;
   height: 200px;
   border-radius: 200px;
-  margin: 10px;
-  margin-left: 100px;
+  margin: 20px;
 `;
 
 const Description = styled.div`
@@ -63,6 +63,10 @@ const Button = styled.button`
 
 const Input = styled.input`
   font-size: 20px;
+`;
+
+const Shoutout = styled.div`
+  width: 200px;
 `;
 
 const Task = ({ task }) => {
@@ -140,13 +144,13 @@ const Task = ({ task }) => {
         <ToolTip showToolTip={showToolTip}> {completed} out of {accepted} users have completed this task!</ToolTip>
       </div>
       <ProgressPic src={isTaskComplete ? 'https://howard-yang-modulo.s3-us-west-1.amazonaws.com/tree.jpg' : 'https://howard-yang-modulo.s3-us-west-1.amazonaws.com/sprout.jpg'} />
-      <div>
+      <Shoutout>
         <form>
           <Input type="text" onChange={handleShoutoutChange} value={shoutoutInput} />
           <Button type="Button" onClick={sendShoutout}>Send a shoutout!</Button>
         </form>
         <Button onClick={checkForShoutout}>Any shoutouts?</Button>
-      </div>
+      </Shoutout>
     </Container>
   );
 };
